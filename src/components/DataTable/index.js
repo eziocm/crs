@@ -5,7 +5,6 @@ import Cell from '../Cell';
 
 import './styles.css';
 
-// eslint-disable-next-line react/prop-types
 function DataTable({ headings, rows }) {
   function renderHeadingRow(_cell, cellIndex) {
     return (
@@ -17,9 +16,17 @@ function DataTable({ headings, rows }) {
     );
   }
 
+  function openSisregRequest(cod) {
+    window.open(
+      `http://sisregiii.saude.gov.br/cgi-bin/autorizador?ETAPA=VISUALIZAR&co_solicitacao=${cod}`,
+      '_blank',
+      'location=yes,height=640,width=980,scrollbars=yes,status=yes'
+    );
+  }
+
   function renderRow(_row, rowIndex) {
     return (
-      <tr key={`row-${rowIndex}`}>
+      <tr key={`row-${rowIndex}`} onClick={() => openSisregRequest(rows[rowIndex][1])}>
         {rows[rowIndex].map((_cell, cellIndex) => (
           <Cell
             key={`${rowIndex}-${cellIndex}`}
