@@ -11,8 +11,8 @@ function FilterForm() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   
-  function renderDayContents(date) {
-    const tooltipText = `Tooltip for date: ${date}`;
+  function renderDayContents(day, date, otherDate) {
+    const tooltipText = `Intervalo: ${((date<otherDate) ? -1 : 1) * differenceInDays(date, otherDate)} dia(s)`;
     return <span title={tooltipText}>{getDate(date)}</span>;
   };
 
@@ -30,7 +30,7 @@ function FilterForm() {
               selected={startDate}
               onChange={date => setStartDate(date)}
               todayButton="Hoje"
-              renderDayContents={date => renderDayContents(date)}
+              renderDayContents={(day, date) => renderDayContents(day, date, endDate)}
               disabledKeyboardNavigation
             />
           </div>
@@ -45,7 +45,7 @@ function FilterForm() {
               selected={endDate}
               onChange={date => setEndDate(date)}
               todayButton="Hoje"
-              renderDayContents={date => renderDayContents(date)}
+              renderDayContents={(day, date) => renderDayContents(day, date, startDate)}
               disabledKeyboardNavigation
             />
           </div>
